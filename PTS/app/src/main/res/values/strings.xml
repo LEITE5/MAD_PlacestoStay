@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Places To Stay</string>
+    <string name="savePTS">Save this Place!</string>
+    <string name="btnSave">Save!</string>
+    <string name="tvName">Name: </string>
+    <string name="tvType">Type: </string>
+    <string name="tvPPN">Price/Night: </string>
+    <string name="MenuSave">Save current PTS</string>
+    <string name="preferences">Preferences</string>
+
+</resources>
