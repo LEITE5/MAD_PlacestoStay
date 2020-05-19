@@ -79,15 +79,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         };
 
         items = new ItemizedIconOverlay<OverlayItem>(this, new ArrayList<OverlayItem>(), markerGestureListener);
-
         mv.getOverlays().add(items);
-
         items.addItems(PTStoSave);
-
 
         loadText();
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -105,11 +101,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             startActivityForResult(intent, 1);
             return true;
         } else if (item.getItemId() == R.id.MenuSave) {
-            if (AutoSave == false){
-                SavetoFile(PTStoSave);
-                PTStoSave.clear();
+            SavetoFile(PTStoSave);
+            PTStoSave.clear();
             return true;
-            }
         }
         return false;
     }
@@ -125,20 +119,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 String type = extras.getString("ptsType");
                 String ppn = extras.getString("ptsPPN");
 
-
                 OverlayItem Marker = new OverlayItem(name, type + "," + ppn, new GeoPoint(LAT, LON));
-
                 items.addItem(Marker);
                 String title = Marker.getTitle();
                 String snippet = Marker.getSnippet();
                 String lat = "" + Marker.getPoint().getLatitude();
                 String lon = "" + Marker.getPoint().getLongitude();
 
-                if(AutoSave == true)
-                {
-                savePreference(title + "," + snippet + "," + lat + "," + lon);
-                }
-                else{
+                if (AutoSave == true) {
+                    savePreference(title + "," + snippet + "," + lat + "," + lon);
+                } else {
                     PTStoSave.add(Marker);
                 }
                 mv.getOverlays().add(items);
@@ -148,20 +138,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     // Save PTS to file through menu option
-    private void SavetoFile(ArrayList<OverlayItem> PTStoSave){
+    private void SavetoFile(ArrayList<OverlayItem> PTStoSave) {
         PrintWriter printWriter = null;
         try {
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "placestostay");
             printWriter = new PrintWriter(new FileOutputStream(file, true));
 
-            for (OverlayItem ItemtoSave : PTStoSave)
-            {
+            for (OverlayItem ItemtoSave : PTStoSave) {
                 String saveText = ItemtoSave.getTitle() + "," + ItemtoSave.getSnippet() + "," + ItemtoSave.getPoint().getLatitude() + "," + ItemtoSave.getPoint().getLongitude();
                 printWriter.println(saveText);
             }
-
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (printWriter != null)
@@ -172,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     // Saving by Preferences
     private void savePreference(String text) {
         PrintWriter printWriter = null;
-      try {
+        try {
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "placestostay");
             printWriter = new PrintWriter(new FileOutputStream(file, true));
             printWriter.println(text);
@@ -197,18 +184,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 double lat = Double.parseDouble(arrayslist[3]);
                 double lon = Double.parseDouble(arrayslist[4]);
                 OverlayItem Marker = new OverlayItem(arrayslist[0], "type: " + arrayslist[1] + "ppn: " + arrayslist[2], new GeoPoint(lat, lon));
-
                 items.addItem(Marker);
-                items.addItem(new OverlayItem(arrayslist[0], "type: " + arrayslist[1] + "ppn: " + arrayslist[2], new GeoPoint(lat, lon)));
-
-
-
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void onResume() {
@@ -247,6 +227,4 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Toast.makeText(this, "Status changed: " + status,
                 Toast.LENGTH_LONG).show();
     }
-
-
 }
